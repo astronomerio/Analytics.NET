@@ -17,10 +17,10 @@ namespace Segment
         public static Client Client { get; private set; }
 
         /// <summary>
-        /// Initialized the default Segment.io client with your API writeKey.
+        /// Initialized the default Segment.io client with your Astronomer app id.
         /// </summary>
-        /// <param name="writeKey"></param>
-        public static void Initialize(string writeKey)
+        /// <param name="appId"></param>
+        public static void Initialize(string appId)
         {
             // avoiding double locking as recommended:
             // http://www.yoda.arachsys.com/csharp/singleton.html
@@ -28,22 +28,22 @@ namespace Segment
             {
                 if (Client == null)
                 {
-                    Client = new Client(writeKey);
+                    Client = new Client(appId);
                 }
             }
         }
 
         /// <summary>
-        /// Initialized the default Segment.io client with your API writeKey.
+        /// Initialized the default Segment.io client with your Astronomer app id.
         /// </summary>
-        /// <param name="writeKey"></param>
-		public static void Initialize(string writeKey, Config config)
+        /// <param name="appId"></param>
+		public static void Initialize(string appId, Config config)
         {
             lock (padlock)
             {
                 if (Client == null)
                 {
-                    Client = new Client(writeKey, config);
+                    Client = new Client(appId, config);
                 }
             }
         }

@@ -58,7 +58,7 @@ namespace Segment.Request
 
 				// Basic Authentication
 				// https://segment.io/docs/tracking-api/reference/#authentication
-				request.Headers["Authorization"] = BasicAuthHeader(batch.WriteKey, "");
+				request.Headers["Authorization"] = BasicAuthHeader(batch.AppId, "");
 
 				request.Timeout = (int)Timeout.TotalMilliseconds;
 				request.ContentType = "application/json";

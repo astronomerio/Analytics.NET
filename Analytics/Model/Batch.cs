@@ -8,7 +8,7 @@ namespace Segment.Model
 {
     internal class Batch
     {
-        internal string WriteKey { get; set; }
+        internal string AppId { get; set; }
 
 		[JsonProperty(PropertyName="messageId")]
 		internal string MessageId { get; private set; }
@@ -24,9 +24,9 @@ namespace Segment.Model
 			this.MessageId = Guid.NewGuid ().ToString ();
 		}
 
-        internal Batch(string writeKey, List<BaseAction> batch) : this()
+        internal Batch(string appId, List<BaseAction> batch) : this()
         {
-            this.WriteKey = writeKey;
+            this.appId = appId;
             this.batch = batch;
         }
     }

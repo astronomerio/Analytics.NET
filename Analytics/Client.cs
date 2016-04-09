@@ -17,7 +17,7 @@ namespace Segment
     public class Client : IDisposable
     {
         private IFlushHandler _flushHandler;
-        private string _writeKey;
+        private string _appId;
 		private Config _config;
 
         public Statistics Statistics { get; set; }
@@ -35,28 +35,28 @@ namespace Segment
         #region Initialization
 
         /// <summary>
-        /// Creates a new REST client with a specified API writeKey and default config
+        /// Creates a new REST client with a specified Astronomer app id and default config
         /// </summary>
-        /// <param name="writeKey"></param>
-        public Client(string writeKey) : this(writeKey, new Config()) {}
+        /// <param name="appId"></param>
+        public Client(string appId) : this(appId, new Config()) {}
 
         /// <summary>
-        /// Creates a new REST client with a specified API writeKey and default config
+        /// Creates a new REST client with a specified Astronomer app id and default config
         /// </summary>
-        /// <param name="writeKey"></param>
+        /// <param name="appId"></param>
         /// <param name="config"></param>
-		public Client(string writeKey, Config config)
+		public Client(string appId, Config config)
         {
-            if (String.IsNullOrEmpty(writeKey))
-                throw new InvalidOperationException("Please supply a valid writeKey to initialize.");
+            if (String.IsNullOrEmpty(appId))
+                throw new InvalidOperationException("Please supply a valid app id to initialize.");
 
             this.Statistics = new Statistics();
 
-            this._writeKey = writeKey;
+            this._appId = appId;
 			this._config = config;
 
 			IRequestHandler requestHandler = new BlockingRequestHandler(this, config.Timeout);
-			IBatchFactory batchFactory = new SimpleBatchFactory(this._writeKey);
+			IBatchFactory batchFactory = new SimpleBatchFactory(this._appId);
 
 			if (config.Async)
 				_flushHandler = new AsyncFlushHandler(batchFactory, requestHandler, config.MaxQueueSize);
@@ -68,11 +68,11 @@ namespace Segment
 
         #region Properties
 
-        public string WriteKey
+        public string AppId
         {
             get
             {
-                return _writeKey;
+                return _appId;
             }
         }
 

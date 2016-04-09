@@ -7,16 +7,16 @@ namespace Segment.Flush
 {
 	internal class SimpleBatchFactory : IBatchFactory
 	{
-		private string _writeKey;
+		private string _appId;
 
-		internal SimpleBatchFactory (string writeKey)
+		internal SimpleBatchFactory (string appId)
 		{
-			this._writeKey = writeKey;
+			this._appId = appId;
 		}
 
 		public Batch Create(List<BaseAction> actions) 
 		{
-			return new Batch(_writeKey, actions);
+			return new Batch(_appId, actions);
 		}
 	}
 }
