@@ -1,7 +1,7 @@
 ﻿Analytics.NET
 =============
 
-Analytics.NET is a .NET / C# client for [Segment](https://segment.com).
+Analytics.NET is a .NET / C# client for [Astronomer](http://astronomer.io/).
 
 ## Documentation
 
