@@ -43,17 +43,19 @@ namespace Segment.Request
 
 		public void MakeRequest(Batch batch)
         {
+            System.Diagnostics.Debug.WriteLine("MakeRequest called");
             Stopwatch watch = new Stopwatch();
 
 			try
 			{
-				Uri uri = new Uri(_client.Config.Host + "/v1/import");
+                Uri uri = new Uri(_client.Config.Host + "/v1/import");
 
 				// set the current request time
 				batch.SentAt = DateTime.Now.ToString("o");
-
-				string json = JsonConvert.SerializeObject(batch, settings);
-
+                
+				string jsonTemp = JsonConvert.SerializeObject(batch.batch, settings);
+                string json = "{\"batch\": " + jsonTemp + "}";
+                System.Diagnostics.Debug.WriteLine(json);
 				HttpWebRequest request = (HttpWebRequest) WebRequest.Create(uri);
 
 				// Basic Authentication
@@ -68,8 +70,7 @@ namespace Segment.Request
 				request.ServicePoint.Expect100Continue = false;
 				// buffer the data before sending, ok since we send all in one shot
 				request.AllowWriteStreamBuffering = true;
-
-                Logger.Info("Sending analytics request to Segment.io ..", new Dict
+                Logger.Info("Sending analytics request to Astronomer.io ..", new Dict
                 {
                     { "batch id", batch.MessageId },
                     { "json size", json.Length },
@@ -167,7 +168,7 @@ namespace Segment.Request
 				{
 					using (StreamReader reader = new StreamReader(responseStream))
 					{
-						return reader.ReadToEnd();
+                        return reader.ReadToEnd();
 					}
 				}
 			}

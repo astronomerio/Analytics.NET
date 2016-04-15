@@ -12,7 +12,7 @@ namespace Segment.Model
         private string EventName { get; set; }
 
         [JsonProperty(PropertyName = "properties")]
-        private Properties Properties { get; set; }
+        public Properties Properties { get; set; }
 
         internal Track(string userId, 
 		               string eventName,

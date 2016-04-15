@@ -26,7 +26,7 @@ namespace Segment.Model
 
         internal Batch(string appId, List<BaseAction> batch) : this()
         {
-            this.appId = appId;
+            this.AppId = appId;
             this.batch = batch;
         }
     }
