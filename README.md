@@ -5,7 +5,7 @@ Analytics.NET is a .NET / C# client for [Astronomer](http://astronomer.io/).
 
 ## Documentation
 
-Our package mirrors everything provided by [Segment](https://segment.com/libraries/.net).
+Documentation is available on [Segment's website](https://segment.com/libraries/.net).
 
 ## Installation
 
