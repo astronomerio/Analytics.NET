@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Text;
-
+using System.Threading.Tasks;
 using Segment.Flush;
-using Segment.Request;
-using Segment.Exception;
 using Segment.Model;
+using Segment.Request;
 using Segment.Stats;
 
 namespace Segment
@@ -105,7 +102,7 @@ namespace Segment
         /// Pass in values in key-value format. String key, then its value
         /// { String, Integer, Boolean, Double, or Date are acceptable types for a value. } </param>
         ///
-        public void Identify(string userId, Traits traits)
+        public void Identify(string userId, IDictionary<string, object> traits)
         {
             Identify(userId, traits, null);
         }
@@ -127,7 +124,7 @@ namespace Segment
 		/// <param name="options">Options allowing you to set timestamp, anonymousId, target integrations,
 		/// and the context of th emessage.</param>
         ///
-		public void Identify(string userId, Traits traits, Options options)
+		public void Identify(string userId, IDictionary<string, object> traits, Options options)
         {
 			if (String.IsNullOrEmpty(userId) && !HasAnonymousId(options))
 				throw new InvalidOperationException("Please supply a valid userId to Identify.");
@@ -177,7 +174,7 @@ namespace Segment
 		/// You can segment your users by any trait you record. Pass in values in key-value format. 
 		/// String key, then its value { String, Integer, Boolean, Double, or Date are acceptable types for a value. } </param>
 		///
-		public void Group(string userId, string groupId, Traits traits)
+		public void Group(string userId, string groupId, IDictionary<string, object> traits)
 		{
 			Group (userId, groupId, traits, null);
 		}
@@ -200,12 +197,12 @@ namespace Segment
 		/// String key, then its value { String, Integer, Boolean, Double, or Date are acceptable types for a value. } </param>
 		///
 		/// <param name="options">Options allowing you to set timestamp, anonymousId, target integrations,
-		/// and the context of th emessage.</param>
+		/// and the context of the message.</param>
 		///
-		public void Group(string userId, string groupId, Traits traits, Options options)
+		public void Group(string userId, string groupId, IDictionary<string, object> traits, Options options)
 		{
 			if (String.IsNullOrEmpty(userId) && !HasAnonymousId(options))
-				throw new InvalidOperationException("Please supply a valid userId or anonymousID to call #Group.");
+				throw new InvalidOperationException("Please supply a valid userId or anonymousId to call #Group.");
 
 			if (String.IsNullOrEmpty(groupId))
 				throw new InvalidOperationException("Please supply a valid groupId to call #Group.");
@@ -248,7 +245,7 @@ namespace Segment
         /// in more detail. This argument is optional, but highly recommended —
         /// you’ll find these properties extremely useful later.</param>
         ///
-		public void Track(string userId, string eventName, Properties properties)
+		public void Track(string userId, string eventName, IDictionary<string, object> properties)
         {
 			Track(userId, eventName, properties, null);
         }
@@ -298,13 +295,13 @@ namespace Segment
 		/// and the context of th emessage.</param>
 		/// 
 		///
-		public void Track(string userId, string eventName, Properties properties, Options options)
+		public void Track(string userId, string eventName, IDictionary<string, object> properties, Options options)
 		{
 			if (String.IsNullOrEmpty(userId) && !HasAnonymousId(options))
-				throw new InvalidOperationException("Please supply a valid userId or anonymousId to Track.");
+				throw new InvalidOperationException("Please supply a valid userId or anonymousId to call #Track.");
 
 			if (String.IsNullOrEmpty(eventName))
-				throw new InvalidOperationException("Please supply a valid event to Track.");
+				throw new InvalidOperationException("Please supply a valid event to call #Track.");
 
 			Enqueue(new Track(userId, eventName, properties, options));
 		}
@@ -343,7 +340,7 @@ namespace Segment
 				throw new InvalidOperationException("Please supply a valid 'previousId' to Alias.");
 
 			if (String.IsNullOrEmpty(userId))
-				throw new InvalidOperationException("Please supply a valid 'to' to Alias.");
+				throw new InvalidOperationException("Please supply a valid 'userId' to Alias.");
 
 			Enqueue(new Alias(previousId, userId, options));
 		}
@@ -420,7 +417,7 @@ namespace Segment
 		/// in more detail. This argument is optional, but highly recommended —
 		/// you’ll find these properties extremely useful later.</param>
 		///
-		public void Page(string userId, string name, Properties properties)
+		public void Page(string userId, string name, IDictionary<string, object> properties)
 		{
 			Page (userId, name, null, properties, null);
 		}
@@ -443,7 +440,7 @@ namespace Segment
 		/// <param name="options">Options allowing you to set timestamp, anonymousId, target integrations,
 		/// and the context of th emessage.</param>
 		///
-		public void Page(string userId, string name, Properties properties, Options options)
+		public void Page(string userId, string name, IDictionary<string, object> properties, Options options)
 		{
 			Page (userId, name, null, properties, options);
 		}
@@ -468,13 +465,13 @@ namespace Segment
 		/// <param name="options">Options allowing you to set timestamp, anonymousId, target integrations,
 		/// and the context of th emessage.</param>
 		///
-		public void Page(string userId, string name, string category, Properties properties, Options options)
+		public void Page(string userId, string name, string category, IDictionary<string, object> properties, Options options)
 		{
 			if (String.IsNullOrEmpty(userId) && !HasAnonymousId(options))
-				throw new InvalidOperationException("Please supply a valid userId or anonymousId to #Page.");
+				throw new InvalidOperationException("Please supply a valid userId or anonymousId to call #Page.");
 
 			if (String.IsNullOrEmpty(name))
-				throw new InvalidOperationException("Please supply a valid name to #Page.");
+				throw new InvalidOperationException("Please supply a valid name to call #Page.");
 
 			Enqueue(new Page(userId, name, category, properties, options));
 		}
@@ -555,7 +552,7 @@ namespace Segment
 		/// in more detail. This argument is optional, but highly recommended —
 		/// you’ll find these properties extremely useful later.</param>
 		///
-		public void Screen(string userId, string name, Properties properties)
+		public void Screen(string userId, string name, IDictionary<string, object> properties)
 		{
 			Screen (userId, name, null, properties, null);
 		}
@@ -579,7 +576,7 @@ namespace Segment
 		/// <param name="options">Options allowing you to set timestamp, anonymousId, target integrations,
 		/// and the context of th emessage.</param>
 		///
-		public void Screen(string userId, string name, Properties properties, Options options)
+		public void Screen(string userId, string name, IDictionary<string, object> properties, Options options)
 		{
 			Screen (userId, name, null, properties, options);
 		}
@@ -605,13 +602,13 @@ namespace Segment
 		/// <param name="options">Options allowing you to set timestamp, anonymousId, target integrations,
 		/// and the context of th emessage.</param>
 		///
-		public void Screen(string userId, string name, string category, Properties properties, Options options)
+		public void Screen(string userId, string name, string category, IDictionary<string, object> properties, Options options)
 		{
 			if (String.IsNullOrEmpty(userId) && !HasAnonymousId(options))
-				throw new InvalidOperationException("Please supply a valid userId or anonymousId to #Screen.");
+				throw new InvalidOperationException("Please supply a valid userId or anonymousId to call #Screen.");
 
 			if (String.IsNullOrEmpty(name))
-				throw new InvalidOperationException("Please supply a valid name to #Screen.");
+				throw new InvalidOperationException("Please supply a valid name to call #Screen.");
 
 			Enqueue(new Screen(userId, name, category, properties, options));
 		}
@@ -648,9 +645,9 @@ namespace Segment
 
         private void Enqueue(BaseAction action)
         {
-            _flushHandler.Process(action);
+            _flushHandler.Process(action).GetAwaiter().GetResult();
 
-            this.Statistics.Submitted += 1;
+            this.Statistics.Submitted = Statistics.Increment(this.Statistics.Submitted);
         }
 
         #endregion
