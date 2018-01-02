@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
     <metadata>
-        <id>Analytics</id>
+        <id>Astronomer.NET</id>
         <version>3.0.1</version>
         <title>Analytics Astronomer</title>
         <authors>Segment Team</authors>
@@ -21,7 +21,4 @@
             </group>
         </dependencies>
     </metadata>
-    <files>
-      <file src="Analytics/bin/Debug/Analytics.NET.dll" target="lib" />
-    </files>
 </package>
