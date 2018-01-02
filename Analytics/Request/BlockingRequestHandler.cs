@@ -50,7 +50,7 @@ namespace Segment.Request
 
 				// Basic Authentication
 				// https://segment.io/docs/tracking-api/reference/#authentication
-				_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", BasicAuthHeader(batch.WriteKey, string.Empty));
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", BasicAuthHeader(batch.AppId, string.Empty));
 
 				Logger.Info("Sending analytics request to Astronomer.io ..", new Dict
 				{
